@@ -1,0 +1,16 @@
+table {
+    border-collapse: collapse;
+    border: solid black 2px;
+}
+
+tr.correct {
+    background: lightgreen;
+}
+
+tr.incorrect {
+    background: orangered;
+}
+
+td {
+    border: solid black 1px;
+}
