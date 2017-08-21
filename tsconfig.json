@@ -1,6 +1,8 @@
 {
   "compilerOptions": {
-    "target": "es6",
+    "noUnusedParameters": true,
+    "noUnusedLocals": true,
+    "target": "es2015",
     "module": "system",
     "sourceMap": true,
     "emitDecoratorMetadata": true,
@@ -8,7 +10,9 @@
     "moduleResolution": "node",
     "removeComments": false,
     "noImplicitAny": false,
-    "suppressImplicitAnyIndexErrors": true
+    "suppressImplicitAnyIndexErrors": true,
+    "outDir": "./js",
+    "watch": true
   },
   "exclude": [
     "node_modules"

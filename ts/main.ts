@@ -1,15 +1,15 @@
 document.onload = () => console.log( "Le document est prêt" );
 let PromesseDocumentPret = new Promise( (resolve) => {
-    if(document.readyState === "complete") {
+    if (document.readyState === "complete") {
         resolve();
     } else {
-        document.onreadystatechange = () => document.readyState==="complete"?resolve():null;
+        document.onreadystatechange = () => document.readyState === "complete" ? resolve() : null;
     }
 });
 /***********************************************************************************************************************
  * Fonction qui renvoie le minimum de deux nombres
  */
-function min(a: number, b: number) : number {
+function min(a: number, b: number): number {
     return NaN;
 }
 LogTests("Fonction qui renvoie le minimum de deux nombres", min, [
@@ -20,7 +20,7 @@ LogTests("Fonction qui renvoie le minimum de deux nombres", min, [
 /***********************************************************************************************************************
  * Fonction qui trie des nombres par ordre croissant
  */
-function triCroissant(...L : number[]) : number[] {
+function triCroissant(...L: number[]): number[] {
     return [];
 }
 LogTests("Fonction qui trie des nombres par ordre croissant", triCroissant, [
@@ -32,7 +32,7 @@ LogTests("Fonction qui trie des nombres par ordre croissant", triCroissant, [
 /***********************************************************************************************************************
  * Fonction qui trie des nombres par ordre décroissant
  */
-function triDécroissant(...L : number[]) : number[] {
+function triDécroissant(...L: number[]): number[] {
     return [];
 }
 LogTests("Fonction qui trie des nombres par ordre décroissant", triDécroissant, [
@@ -45,7 +45,7 @@ LogTests("Fonction qui trie des nombres par ordre décroissant", triDécroissant
 /***********************************************************************************************************************
  * Fonction qui somme
  */
-function Somme(...L : number[]) : number {
+function Somme(...L: number[]): number {
     return NaN;
 }
 LogTests("Fonction qui somme", Somme, [
@@ -59,7 +59,7 @@ LogTests("Fonction qui somme", Somme, [
 /***********************************************************************************************************************
  * Fonction qui fait la moyenne
  */
-function Moyenne(...L  : number[]) : number {
+function Moyenne(...L: number[]): number {
     return NaN;
 }
 LogTests("Fonction qui fait la moyenne", Moyenne, [
@@ -73,13 +73,13 @@ LogTests("Fonction qui fait la moyenne", Moyenne, [
  * Fonction qui renvoie les nombres strictement supérieurs à un certain seuil
  * et triés par ordre croissant
  */
-function NombresSupérieursA(min: number, notes : number[]) : number[] {
+function NombresSupérieursA(min: number, notes: number[]): number[] {
     return [];
 }
 LogTests("Les nombres strictement supérieurs à un certain seuil", NombresSupérieursA, [
-    {args: [10, [59, 51, 63, 95, 64, -38, -21, -6, 16, 44]], expectedResult: [16,44,51,59,63,64,95]},
-    {args: [20, [59, 51, 63, 95, 64, -38, -21, -6, 16, 44]], expectedResult: [44,51,59,63,64,95]},
-    {args: [50, [59, 51, 63, 95, 64, -38, -21, -6, 16, 44]], expectedResult: [51,59,63,64,95]},
+    {args: [10, [59, 51, 63, 95, 64, -38, -21, -6, 16, 44]], expectedResult: [16, 44, 51, 59, 63, 64, 95]},
+    {args: [20, [59, 51, 63, 95, 64, -38, -21, -6, 16, 44]], expectedResult: [44, 51, 59, 63, 64, 95]},
+    {args: [50, [59, 51, 63, 95, 64, -38, -21, -6, 16, 44]], expectedResult: [51, 59, 63, 64, 95]},
     {args: [50, [23, 29, -12, -23, 40, -4, -40, -60, -98, -52]], expectedResult: []},
     {args: [10, []], expectedResult: []}
 ]);
@@ -88,12 +88,12 @@ LogTests("Les nombres strictement supérieurs à un certain seuil", NombresSupé
  * Fonction qui renvoie les nombres strictement compris entre une valeur minimale et une valeur maximale
  * et triés par ordre croissant
  */
-function NombresComprisEntre(min: number, max: number, notes : number[]) : number[] {
+function NombresComprisEntre(min: number, max: number, notes: number[]): number[] {
     return [];
 }
 LogTests("Les nombres strictement compris entre une valeur minimale et maximale", NombresComprisEntre, [
     {args: [10, 20, [59, 51, 63, 95, 64, -38, -21, -6, 16, 44]], expectedResult: [16]},
-    {args: [0, 100, [59, 51, 63, 95, 64, -38, -21, -6, 16, 44]], expectedResult: [16,44,51,59,63,64,95]},
+    {args: [0, 100, [59, 51, 63, 95, 64, -38, -21, -6, 16, 44]], expectedResult: [16, 44, 51, 59, 63, 64, 95]},
     {args: [10, 20, [23, 29, -12, -23, 40, -4, -40, -60, -98, -52]], expectedResult: []},
     {args: [10, 20, []], expectedResult: []}
 ]);
@@ -102,7 +102,7 @@ LogTests("Les nombres strictement compris entre une valeur minimale et maximale"
 /***********************************************************************************************************************
  * Produit scalaire entre deux vecteurs
  */
-function ProduitScalaire(V1: number[], V2: number[]) : number {
+function ProduitScalaire(V1: number[], V2: number[]): number {
     return NaN;
 }
 LogTests("Produit scalaire entre deux vecteurs", ProduitScalaire, [
@@ -119,13 +119,13 @@ LogTests("Produit scalaire entre deux vecteurs", ProduitScalaire, [
 /***********************************************************************************************************************
  * Addition de matrices
  */
-function AjoutMatrices(V1: number[][], V2: number[][]) : number[][] {
+function AjoutMatrices(V1: number[][], V2: number[][]): number[][] {
     return [];
 }
 LogTests("Addition de matrices", AjoutMatrices, [
     {args: [ [[1, 1], [1, 1]], [[1, 0], [0, 1]] ], expectedResult: [[2, 1], [1, 2]]},
     {args: [ [[1, 1], [1, 1]], [[1, 4], [0, 1]] ], expectedResult: [[2, 5], [1, 2]]},
-    {args: [ [[1, 1], [1, 1], [1, 3]], [[1, -4], [0, 1], [65, -54]] ], expectedResult: [[2,-3],[1,2],[66,-51]]},
+    {args: [ [[1, 1], [1, 1], [1, 3]], [[1, -4], [0, 1], [65, -54]] ], expectedResult: [[2, -3], [1, 2], [66, -51]]},
     {args: [ [[1, 1], [1, 1]], [] ], expectedResult: "Les matrices doivent être non vides", errorExpected: true},
     {args: [ [[1, 1], [1, 1]], [5] ], expectedResult: "Les matrices doivent être de même taille", errorExpected: true},
     {args: [ [5], [[1, 1], [1, 1]] ], expectedResult: "Les matrices doivent être de même taille", errorExpected: true},
@@ -163,8 +163,8 @@ LogTests("Addition de matrices", AjoutMatrices, [
 /***********************************************************************************************************************
  * Utilitaires
  */
-function assertEqual<T>(a:T, b:T) : boolean {
-    switch(typeof a) {
+function assertEqual<T>(a: T, b: T): boolean {
+    switch (typeof a) {
         case "object":
             return JSON.stringify(a) === JSON.stringify(b);
         default:
@@ -186,31 +186,31 @@ const template = `
 </table>
 `;
 
-type Assertion = {args: any[], expectedResult: any, errorExpected? : boolean};
-function LogTests(title: string, fct: (...A) => any, assertions : Assertion[]) : void {
+type Assertion = {args: any[], expectedResult: any, errorExpected?: boolean};
+function LogTests(title: string, fct: (...A) => any, assertions: Assertion[]): void {
     PromesseDocumentPret.then( () => LogTestsOK(title, fct, assertions) );
 }
-function LogTestsOK(title: string, fct: (...A) => any, assertions : Assertion[]) : void {
+function LogTestsOK(title: string, fct: (...A) => any, assertions: Assertion[]): void {
     let section = document.createElement( "section" ),
         nbCorrects = 0,
-        exceptionTriggered : boolean;
+        exceptionTriggered: boolean;
     section.innerHTML = template;
     section.querySelector( "h2" ).textContent = title;
     let tbody = section.querySelector( "tbody" );
-    for( let {args, expectedResult, errorExpected} of assertions ) {
+    for (let {args, expectedResult, errorExpected} of assertions) {
         let tr  = document.createElement( "tr" );
         let res;
         try {
             res = fct.apply(null, args);
             exceptionTriggered = false;
-        } catch(err) {
+        } catch (err) {
             res = err;
             exceptionTriggered = true;
         }
         let tdI = document.createElement( "td" ); tr.appendChild( tdI ); tdI.textContent = JSON.stringify( args );
         let tdO = document.createElement( "td" ); tr.appendChild( tdO ); tdO.textContent = JSON.stringify( res );
         let tdE = document.createElement( "td" ); tr.appendChild( tdE ); tdE.textContent = JSON.stringify( expectedResult );
-        if( assertEqual(res, expectedResult) && (typeof errorExpected === "undefined" || exceptionTriggered === errorExpected) ) {
+        if (assertEqual(res, expectedResult) && (typeof errorExpected === "undefined" || exceptionTriggered === errorExpected) ) {
             tr.classList.add( "correct" );
             nbCorrects++;
         } else {
