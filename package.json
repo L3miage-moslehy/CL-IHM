@@ -8,7 +8,7 @@
     "compile": "node ./node_modules/typescript/bin/tsc",
     "lint": "node ./node_modules/tslint/bin/tslint --config \"./tslint.json\" \"ts/*.ts\"",
     "watch:lint": "node ./node_modules/chokidar-cli/index.js ./ts/**/*.ts -c \"npm run lint\" --initial --verbose",
-    "all": "npm-run-all --parallel watch:lint compile"
+    "all": "npm-run-all --parallel server watch:lint compile"
   },
   "repository": {
     "type": "git",
