@@ -2,27 +2,22 @@
   "name": "l3m-tp1",
   "email": "alexandre.demeure@inria.fr",
   "url": "http://iihm.imag.fr/demeure",
-  "version": "0.0.1",
+  "version": "2.0.0",
   "scripts": {
-    "server": "node ./miniServerHTTP.js",
-    "compile": "node ./node_modules/typescript/bin/tsc",
-    "lint": "node ./node_modules/tslint/bin/tslint --config \"./tslint.json\" \"ts/*.ts\"",
-    "watch:lint": "node ./node_modules/chokidar-cli/index.js ./ts/**/*.ts -c \"npm run lint\" --initial --verbose",
-    "all": "npm-run-all --parallel server watch:lint compile"
+    "tsc": "tsc",
+    "tsc:w": "tsc -w",
+    "start": "concurrently \"npm run tsc:w\" \"npm run dev\" ",
+    "dev": "parcel index.html",
+    "build": "parcel build index.html"
   },
   "repository": {
     "type": "git",
     "url": ""
   },
-  "dependencies": {
-    "express": "^4.14.0"
-  },
+  "dependencies": {},
   "devDependencies": {
-    "chokidar": "^1.7.0",
-    "chokidar-cli": "^1.2.0",
-    "glob": "^7.1.2",
-    "npm-run-all": "^4.0.2",
-    "tslint": "^5.6.0",
-    "typescript": "^2.4.2"
+    "concurrently": "^4.1.2",
+    "parcel-bundler": "^1.12.3",
+    "typescript": "^3.6.2"
   }
 }

@@ -10,6 +10,7 @@ let PromesseDocumentPret = new Promise( (resolve) => {
  * Fonction qui renvoie le minimum de deux nombres
  */
 function min(a: number, b: number): number {
+    console.log("Ini entre", a, "et", b);
     return NaN;
 }
 LogTests("Fonction qui renvoie le minimum de deux nombres", min, [
@@ -21,6 +22,7 @@ LogTests("Fonction qui renvoie le minimum de deux nombres", min, [
  * Fonction qui trie des nombres par ordre croissant
  */
 function triCroissant(...L: number[]): number[] {
+    console.log(L);
     return [];
 }
 LogTests("Fonction qui trie des nombres par ordre croissant", triCroissant, [
@@ -33,6 +35,7 @@ LogTests("Fonction qui trie des nombres par ordre croissant", triCroissant, [
  * Fonction qui trie des nombres par ordre décroissant
  */
 function triDécroissant(...L: number[]): number[] {
+    console.log(L);
     return [];
 }
 LogTests("Fonction qui trie des nombres par ordre décroissant", triDécroissant, [
@@ -46,6 +49,7 @@ LogTests("Fonction qui trie des nombres par ordre décroissant", triDécroissant
  * Fonction qui somme
  */
 function Somme(...L: number[]): number {
+    console.log(L);
     return NaN;
 }
 LogTests("Fonction qui somme", Somme, [
@@ -60,6 +64,7 @@ LogTests("Fonction qui somme", Somme, [
  * Fonction qui fait la moyenne
  */
 function Moyenne(...L: number[]): number {
+    console.log(L);
     return NaN;
 }
 LogTests("Fonction qui fait la moyenne", Moyenne, [
@@ -74,6 +79,7 @@ LogTests("Fonction qui fait la moyenne", Moyenne, [
  * et triés par ordre croissant
  */
 function NombresSupérieursA(min: number, notes: number[]): number[] {
+    console.log(min, notes);
     return [];
 }
 LogTests("Les nombres strictement supérieurs à un certain seuil", NombresSupérieursA, [
@@ -89,6 +95,7 @@ LogTests("Les nombres strictement supérieurs à un certain seuil", NombresSupé
  * et triés par ordre croissant
  */
 function NombresComprisEntre(min: number, max: number, notes: number[]): number[] {
+    console.log(min, max, notes);
     return [];
 }
 LogTests("Les nombres strictement compris entre une valeur minimale et maximale", NombresComprisEntre, [
@@ -103,6 +110,7 @@ LogTests("Les nombres strictement compris entre une valeur minimale et maximale"
  * Produit scalaire entre deux vecteurs
  */
 function ProduitScalaire(V1: number[], V2: number[]): number {
+    console.log("ProduitScalaire", V1, V2);
     return NaN;
 }
 LogTests("Produit scalaire entre deux vecteurs", ProduitScalaire, [
@@ -119,7 +127,8 @@ LogTests("Produit scalaire entre deux vecteurs", ProduitScalaire, [
 /***********************************************************************************************************************
  * Addition de matrices
  */
-function AjoutMatrices(V1: number[][], V2: number[][]): number[][] {
+function AjoutMatrices(M1: number[][], M2: number[][]): number[][] {
+    console.log("AjoutMatrices", M1, M2);
     return [];
 }
 LogTests("Addition de matrices", AjoutMatrices, [
