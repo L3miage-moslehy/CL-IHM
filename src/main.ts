@@ -1,11 +1,6 @@
-document.onload = () => console.log( "Le document est prêt" );
-let PromesseDocumentPret = new Promise( (resolve) => {
-    if (document.readyState === "complete") {
-        resolve();
-    } else {
-        document.onreadystatechange = () => document.readyState === "complete" ? resolve() : null;
-    }
-});
+import './utils';
+import { LogTests } from './utils';
+
 /***********************************************************************************************************************
  * Fonction qui renvoie le minimum de deux nombres
  */
@@ -17,6 +12,14 @@ LogTests("Fonction qui renvoie le minimum de deux nombres", min, [
     {args: [17, 27], expectedResult: 17},
     {args: [17, 15], expectedResult: 15},
 ]);
+
+
+
+
+
+
+
+
 
 /***********************************************************************************************************************
  * Fonction qui trie des nombres par ordre croissant
@@ -107,11 +110,39 @@ LogTests("Les nombres strictement compris entre une valeur minimale et maximale"
 
 
 /***********************************************************************************************************************
+ * Coder la méthode zip
+ * Prends en paramètre des tableaux, renvoie un tableau.
+ * Chaque élément du tableau résultat à l'index i contient le tableaux les éléments d'indexes i des tableaux d'entrées.
+ * exemple
+ * L1 = [a, b, c]
+ * L2 = [1, 2, 3]
+ * L3 = [x, y, z]
+ * zip(L1, L2, L3) = [
+ *   [a, 1, x],
+ *   [b, 2, y],
+ *   [c, 3, z]
+ * ]
+ */
+function Zip(...L: unknown[][]): unknown[][] {
+    console.log(L);
+    return [];
+}
+
+LogTests("Zip de tableaux", Zip, [
+    {args: [  ], expectedResult: []},
+    {args: [ [1, 2, 3], ['a', 'b', 'c'] ], expectedResult: [[1, 'a'], [2, 'b'], [3, 'c']]},
+    {args: [ [1, 2, 3], ['a', 'b', 'c'], [true, false, false] ], expectedResult: [[1, 'a', true], [2, 'b', false], [3, 'c', false]]},
+    {args: [ [1], ['a', 'b', 'c'], [true, false, false] ], expectedResult: [[1, 'a', true], [undefined, 'b', false], [undefined, 'c', false]]},
+    {args: [ [1, 2, 3], ['a', 'b', 'c'], ['x', 'y', 'z'], [true, false, true]], expectedResult: [[1, 'a', 'x', true], [2, 'b', 'y', false], [3, 'c', 'z', true]]},
+]);
+
+
+/***********************************************************************************************************************
  * Produit scalaire entre deux vecteurs
  */
 function ProduitScalaire(V1: number[], V2: number[]): number {
     console.log("ProduitScalaire", V1, V2);
-    return NaN;
+    return 0;
 }
 LogTests("Produit scalaire entre deux vecteurs", ProduitScalaire, [
     {args: [[1, 1], [1, 1]], expectedResult: 2},
@@ -129,7 +160,7 @@ LogTests("Produit scalaire entre deux vecteurs", ProduitScalaire, [
  */
 function AjoutMatrices(M1: number[][], M2: number[][]): number[][] {
     console.log("AjoutMatrices", M1, M2);
-    return [];
+    return []
 }
 LogTests("Addition de matrices", AjoutMatrices, [
     {args: [ [[1, 1], [1, 1]], [[1, 0], [0, 1]] ], expectedResult: [[2, 1], [1, 2]]},
@@ -144,89 +175,9 @@ LogTests("Addition de matrices", AjoutMatrices, [
 ]);
 
 
+
 /***********************************************************************************************************************
  * Codez une classe Matrice implémentant l'ajout et la multiplication de matrices.
  */
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/***********************************************************************************************************************
- * Utilitaires
- */
-function assertEqual<T>(a: T, b: T): boolean {
-    switch (typeof a) {
-        case "object":
-            return JSON.stringify(a) === JSON.stringify(b);
-        default:
-            return a === b;
-    }
-}
-
-const template = `
-<hr/>
-<h2></h2>
-<table>
-    <caption></caption>
-    <thead>
-        <th>Inputs</th>
-        <th>Output</th>
-        <th>Expected output</th>
-    </thead>
-    <tbody></tbody>
-</table>
-`;
-
-type Assertion = {args: any[], expectedResult: any, errorExpected?: boolean};
-function LogTests(title: string, fct: (...A) => any, assertions: Assertion[]): void {
-    PromesseDocumentPret.then( () => LogTestsOK(title, fct, assertions) );
-}
-function LogTestsOK(title: string, fct: (...A) => any, assertions: Assertion[]): void {
-    let section = document.createElement( "section" ),
-        nbCorrects = 0,
-        exceptionTriggered: boolean;
-    section.innerHTML = template;
-    section.querySelector( "h2" ).textContent = title;
-    let tbody = section.querySelector( "tbody" );
-    for (let {args, expectedResult, errorExpected} of assertions) {
-        let tr  = document.createElement( "tr" );
-        let res;
-        try {
-            res = fct.apply(null, args);
-            exceptionTriggered = false;
-        } catch (err) {
-            res = err;
-            exceptionTriggered = true;
-        }
-        let tdI = document.createElement( "td" ); tr.appendChild( tdI ); tdI.textContent = JSON.stringify( args );
-        let tdO = document.createElement( "td" ); tr.appendChild( tdO ); tdO.textContent = JSON.stringify( res );
-        let tdE = document.createElement( "td" ); tr.appendChild( tdE ); tdE.textContent = JSON.stringify( expectedResult );
-        if (assertEqual(res, expectedResult) && (typeof errorExpected === "undefined" || exceptionTriggered === errorExpected) ) {
-            tr.classList.add( "correct" );
-            nbCorrects++;
-        } else {
-            tr.classList.add( "incorrect" );
-        }
-        tbody.appendChild( tr );
-    }
-    section.querySelector( "caption" ).textContent = `Recap: ${nbCorrects} / ${assertions.length}`;
-    document.body.appendChild( section );
-}

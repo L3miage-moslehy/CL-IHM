@@ -1,12 +1,5 @@
-document.onload = () => console.log("Le document est prêt");
-let PromesseDocumentPret = new Promise((resolve) => {
-    if (document.readyState === "complete") {
-        resolve();
-    }
-    else {
-        document.onreadystatechange = () => document.readyState === "complete" ? resolve() : null;
-    }
-});
+import './utils';
+import { LogTests } from './utils';
 /***********************************************************************************************************************
  * Fonction qui renvoie le minimum de deux nombres
  */
@@ -99,11 +92,25 @@ LogTests("Les nombres strictement compris entre une valeur minimale et maximale"
     { args: [10, 20, []], expectedResult: [] }
 ]);
 /***********************************************************************************************************************
+ * Coder la méthode zip
+ */
+function Zip(...L) {
+    console.log(L);
+    return [];
+}
+LogTests("Zip de tableaux", Zip, [
+    { args: [], expectedResult: [] },
+    { args: [[1, 2, 3], ['a', 'b', 'c']], expectedResult: [[1, 'a'], [2, 'b'], [3, 'c']] },
+    { args: [[1, 2, 3], ['a', 'b', 'c'], [true, false, false]], expectedResult: [[1, 'a', true], [2, 'b', false], [3, 'c', false]] },
+    { args: [[1], ['a', 'b', 'c'], [true, false, false]], expectedResult: [[1, 'a', true], [undefined, 'b', false], [undefined, 'c', false]] },
+    { args: [[1, 2, 3], ['a', 'b', 'c'], ['x', 'y', 'z'], []], expectedResult: [[1, 'a', true], [2, 'b', false], [3, 'c', false]] },
+]);
+/***********************************************************************************************************************
  * Produit scalaire entre deux vecteurs
  */
 function ProduitScalaire(V1, V2) {
     console.log("ProduitScalaire", V1, V2);
-    return NaN;
+    return 0;
 }
 LogTests("Produit scalaire entre deux vecteurs", ProduitScalaire, [
     { args: [[1, 1], [1, 1]], expectedResult: 2 },
@@ -135,68 +142,4 @@ LogTests("Addition de matrices", AjoutMatrices, [
 /***********************************************************************************************************************
  * Codez une classe Matrice implémentant l'ajout et la multiplication de matrices.
  */
-/***********************************************************************************************************************
- * Utilitaires
- */
-function assertEqual(a, b) {
-    switch (typeof a) {
-        case "object":
-            return JSON.stringify(a) === JSON.stringify(b);
-        default:
-            return a === b;
-    }
-}
-const template = `
-<hr/>
-<h2></h2>
-<table>
-    <caption></caption>
-    <thead>
-        <th>Inputs</th>
-        <th>Output</th>
-        <th>Expected output</th>
-    </thead>
-    <tbody></tbody>
-</table>
-`;
-function LogTests(title, fct, assertions) {
-    PromesseDocumentPret.then(() => LogTestsOK(title, fct, assertions));
-}
-function LogTestsOK(title, fct, assertions) {
-    let section = document.createElement("section"), nbCorrects = 0, exceptionTriggered;
-    section.innerHTML = template;
-    section.querySelector("h2").textContent = title;
-    let tbody = section.querySelector("tbody");
-    for (let { args, expectedResult, errorExpected } of assertions) {
-        let tr = document.createElement("tr");
-        let res;
-        try {
-            res = fct.apply(null, args);
-            exceptionTriggered = false;
-        }
-        catch (err) {
-            res = err;
-            exceptionTriggered = true;
-        }
-        let tdI = document.createElement("td");
-        tr.appendChild(tdI);
-        tdI.textContent = JSON.stringify(args);
-        let tdO = document.createElement("td");
-        tr.appendChild(tdO);
-        tdO.textContent = JSON.stringify(res);
-        let tdE = document.createElement("td");
-        tr.appendChild(tdE);
-        tdE.textContent = JSON.stringify(expectedResult);
-        if (assertEqual(res, expectedResult) && (typeof errorExpected === "undefined" || exceptionTriggered === errorExpected)) {
-            tr.classList.add("correct");
-            nbCorrects++;
-        }
-        else {
-            tr.classList.add("incorrect");
-        }
-        tbody.appendChild(tr);
-    }
-    section.querySelector("caption").textContent = `Recap: ${nbCorrects} / ${assertions.length}`;
-    document.body.appendChild(section);
-}
 //# sourceMappingURL=main.js.map
