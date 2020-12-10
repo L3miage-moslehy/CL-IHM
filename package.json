@@ -1,5 +1,5 @@
 {
-  "name": "l3m-tp2v2",
+  "name": "l3m-tp1v2",
   "version": "3.0.0",
   "description": "",
   "main": "index.js",
@@ -12,6 +12,6 @@
   "dependencies": {},
   "devDependencies": {
     "parcel-bundler": "^1.12.4",
-    "typescript": "^4.0.2"
+    "typescript": "^4.1.2"
   }
 }

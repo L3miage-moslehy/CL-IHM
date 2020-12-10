@@ -24,7 +24,7 @@ LogTests("Fonction qui renvoie le minimum de deux nombres", min, [
 /***********************************************************************************************************************
  * Fonction qui trie des nombres par ordre croissant
  */
-function triCroissant(...L: number[]): number[] {
+function triCroissant(...L: Readonly<number[]>): number[] {
     console.log(L);
     return [];
 }
@@ -37,7 +37,7 @@ LogTests("Fonction qui trie des nombres par ordre croissant", triCroissant, [
 /***********************************************************************************************************************
  * Fonction qui trie des nombres par ordre décroissant
  */
-function triDécroissant(...L: number[]): number[] {
+function triDécroissant(...L: Readonly<number[]>): number[] {
     console.log(L);
     return [];
 }
@@ -51,7 +51,7 @@ LogTests("Fonction qui trie des nombres par ordre décroissant", triDécroissant
 /***********************************************************************************************************************
  * Fonction qui somme
  */
-function Somme(...L: number[]): number {
+function Somme(...L: Readonly<number[]>): number {
     console.log(L);
     return NaN;
 }
@@ -66,7 +66,7 @@ LogTests("Fonction qui somme", Somme, [
 /***********************************************************************************************************************
  * Fonction qui fait la moyenne
  */
-function Moyenne(...L: number[]): number {
+function Moyenne(...L: Readonly<number[]>): number {
     console.log(L);
     return NaN;
 }
@@ -81,7 +81,7 @@ LogTests("Fonction qui fait la moyenne", Moyenne, [
  * Fonction qui renvoie les nombres strictement supérieurs à un certain seuil
  * et triés par ordre croissant
  */
-function NombresSupérieursA(min: number, notes: number[]): number[] {
+function NombresSupérieursA(min: number, notes: Readonly<number[]>): number[] {
     console.log(min, notes);
     return [];
 }
@@ -97,7 +97,7 @@ LogTests("Les nombres strictement supérieurs à un certain seuil", NombresSupé
  * Fonction qui renvoie les nombres strictement compris entre une valeur minimale et une valeur maximale
  * et triés par ordre croissant
  */
-function NombresComprisEntre(min: number, max: number, notes: number[]): number[] {
+function NombresComprisEntre(min: number, max: number, notes: Readonly<number[]>): number[] {
     console.log(min, max, notes);
     return [];
 }
@@ -123,7 +123,9 @@ LogTests("Les nombres strictement compris entre une valeur minimale et maximale"
  *   [c, 3, z]
  * ]
  */
-function Zip(...L: unknown[][]): unknown[][] {
+type ReadOnlyMatrix<T> = Readonly<Readonly<T[]>[]>;
+
+function Zip(...L: ReadOnlyMatrix<unknown>): unknown[][] {
     console.log(L);
     return [];
 }
@@ -140,7 +142,7 @@ LogTests("Zip de tableaux", Zip, [
 /***********************************************************************************************************************
  * Produit scalaire entre deux vecteurs
  */
-function ProduitScalaire(V1: number[], V2: number[]): number {
+function ProduitScalaire(V1: Readonly<number[]>, V2: Readonly<number[]>): number {
     console.log("ProduitScalaire", V1, V2);
     return 0;
 }
@@ -158,7 +160,7 @@ LogTests("Produit scalaire entre deux vecteurs", ProduitScalaire, [
 /***********************************************************************************************************************
  * Addition de matrices
  */
-function AjoutMatrices(M1: number[][], M2: number[][]): number[][] {
+function AjoutMatrices(M1: ReadOnlyMatrix<number>, M2: ReadOnlyMatrix<number>): number[][] {
     console.log("AjoutMatrices", M1, M2);
     return []
 }
