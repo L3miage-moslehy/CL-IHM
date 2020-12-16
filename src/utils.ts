@@ -21,23 +21,24 @@ export function assertEqual<T>(a: T, b: T): boolean {
 
 const template = `
 <hr/>
-<h2></h2>
 <table>
     <caption></caption>
     <thead>
-        <th>Inputs</th>
-        <th>Output</th>
-        <th>Expected output</th>
+        <th><h2></h2></th>
     </thead>
     <tbody></tbody>
 </table>
 `;
 
-export type Assertion = {args: any[], expectedResult: any, errorExpected?: boolean};
-export function LogTests(title: string, fct: (...A) => any, assertions: Assertion[]): void {
-    PromesseDocumentPret.then( () => LogTestsOK(title, fct, assertions) );
+function toArgs(L: any[]): string {
+    return L.map( v => JSON.stringify(v) ).join(", ");
 }
-export function LogTestsOK(title: string, fct: (...A) => any, assertions: Assertion[]): void {
+
+export type Assertion = {args: any[], expectedResult: any, errorExpected?: boolean};
+export function LogTests(title: string, fct: (...A) => any, fName: string, assertions: Assertion[]): void {
+    PromesseDocumentPret.then( () => LogTestsOK(title, fct, fName, assertions) );
+}
+export function LogTestsOK(title: string, fct: (...A) => any, fName: string, assertions: Assertion[]): void {
     let section = document.createElement( "section" ),
         nbCorrects = 0,
         exceptionTriggered: boolean;
@@ -54,9 +55,17 @@ export function LogTestsOK(title: string, fct: (...A) => any, assertions: Assert
             res = err;
             exceptionTriggered = true;
         }
-        let tdI = document.createElement( "td" ); tr.appendChild( tdI ); tdI.textContent = JSON.stringify( args );
-        let tdO = document.createElement( "td" ); tr.appendChild( tdO ); tdO.textContent = JSON.stringify( res );
-        let tdE = document.createElement( "td" ); tr.appendChild( tdE ); tdE.textContent = JSON.stringify( expectedResult );
+        let tdI = document.createElement( "td" ); tr.appendChild( tdI );
+        tdI.innerHTML  = `<section><section class="root"></section><pre class="actual"></pre><pre class="expected"></pre></section>`;
+        const sroot    = tdI.querySelector(".root"    ) as HTMLElement;
+        const expected = tdI.querySelector(".expected") as HTMLElement;
+        const actual   = tdI.querySelector(".actual"  ) as HTMLElement;
+        
+        sroot.textContent = `${fName}( ${toArgs(args)} )`; JSON.stringify( args );
+        actual  .textContent = `   |    get ${JSON.stringify( res )}`;
+        expected.textContent = `   | expect ${JSON.stringify( expectedResult )}`;
+        // let tdO = document.createElement( "td" ); tr.appendChild( tdO ); tdO.textContent = JSON.stringify( res );
+        // let tdE = document.createElement( "td" ); tr.appendChild( tdE ); tdE.textContent = JSON.stringify( expectedResult );
         if (assertEqual(res, expectedResult) && (typeof errorExpected === "undefined" || exceptionTriggered === errorExpected) ) {
             tr.classList.add( "correct" );
             nbCorrects++;

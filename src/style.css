@@ -1,6 +1,7 @@
 table {
     border-collapse: collapse;
     border: solid black 2px;
+    font-family: monospace;
 }
 
 tr.correct {
@@ -13,4 +14,8 @@ tr.incorrect {
 
 td {
     border: solid black 1px;
+}
+
+table pre {
+    margin: 0;
 }
