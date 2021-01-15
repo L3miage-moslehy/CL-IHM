@@ -5,8 +5,7 @@ import { LogTests } from './utils';
  * Fonction qui renvoie le minimum de deux nombres
  */
 function min(a: number, b: number): number {
-    console.log("Ini entre", a, "et", b);
-    return NaN;
+    return a < b ? a : b; // Math.min(a, b)
 }
 LogTests("Fonction qui renvoie le minimum de deux nombres", min, "min", [
     {args: [17, 27], expectedResult: 17},
@@ -25,8 +24,7 @@ LogTests("Fonction qui renvoie le minimum de deux nombres", min, "min", [
  * Fonction qui trie des nombres par ordre croissant
  */
 function triCroissant(...L: Readonly<number[]>): number[] {
-    console.log(L);
-    return [];
+    return L.slice().sort( (a, b) => a - b );
 }
 LogTests("Fonction qui trie des nombres par ordre croissant", triCroissant, "triCroissant", [
     {args: [59, 51, 63, 95, 64, -38, -21, -6, 16, 44], expectedResult: [-38, -21, -6, 16, 44, 51, 59, 63, 64, 95]},
@@ -38,8 +36,7 @@ LogTests("Fonction qui trie des nombres par ordre croissant", triCroissant, "tri
  * Fonction qui trie des nombres par ordre décroissant
  */
 function triDécroissant(...L: Readonly<number[]>): number[] {
-    console.log(L);
-    return [];
+    return triCroissant(...L).reverse();
 }
 LogTests("Fonction qui trie des nombres par ordre décroissant", triDécroissant, 'triDécroissant', [
     {args: [59, 51, 63, 95, 64, -38, -21, -6, 16, 44], expectedResult: [95, 64, 63, 59, 51, 44, 16, -6, -21, -38]},
@@ -52,8 +49,11 @@ LogTests("Fonction qui trie des nombres par ordre décroissant", triDécroissant
  * Fonction qui somme
  */
 function Somme(...L: Readonly<number[]>): number {
-    console.log(L);
-    return NaN;
+    if (L.length > 0) {
+        return L.reduce( (acc, x) => acc + x );
+    } else {
+        throw "Impossible de sommer un tableau vide";
+    }
 }
 LogTests("Fonction qui somme", Somme, "Somme", [
     {args: [59, 51, 63, 95, 64, -38, -21, -6, 16, 44], expectedResult: 327},
@@ -67,8 +67,11 @@ LogTests("Fonction qui somme", Somme, "Somme", [
  * Fonction qui fait la moyenne
  */
 function Moyenne(...L: Readonly<number[]>): number {
-    console.log(L);
-    return NaN;
+    if (L.length > 0) {
+        return Somme(...L) / L.length;
+    } else {
+        throw "Impossible de faire la moyenne d'un tableau vide";
+    }
 }
 LogTests("Fonction qui fait la moyenne", Moyenne, "Moyenne", [
     {args: [59, 51, 63, 95, 64, -38, -21, -6, 16, 44], expectedResult: 32.7},
@@ -82,8 +85,7 @@ LogTests("Fonction qui fait la moyenne", Moyenne, "Moyenne", [
  * et triés par ordre croissant
  */
 function NombresSupérieursA(min: number, notes: Readonly<number[]>): number[] {
-    console.log(min, notes);
-    return [];
+    return triCroissant( ...notes.filter( x => x > min ) );
 }
 LogTests("Les nombres strictement supérieurs à un certain seuil", NombresSupérieursA, "NombresSupérieursA", [
     {args: [10, [59, 51, 63, 95, 64, -38, -21, -6, 16, 44]], expectedResult: [16, 44, 51, 59, 63, 64, 95]},
@@ -98,8 +100,7 @@ LogTests("Les nombres strictement supérieurs à un certain seuil", NombresSupé
  * et triés par ordre croissant
  */
 function NombresComprisEntre(min: number, max: number, notes: Readonly<number[]>): number[] {
-    console.log(min, max, notes);
-    return [];
+    return triCroissant( ...notes.filter( x => (x > min) && (x < max) ) );
 }
 LogTests("Les nombres strictement compris entre une valeur minimale et maximale", NombresComprisEntre, "NombresComprisEntre", [
     {args: [10, 20, [59, 51, 63, 95, 64, -38, -21, -6, 16, 44]], expectedResult: [16]},
@@ -124,10 +125,22 @@ LogTests("Les nombres strictement compris entre une valeur minimale et maximale"
  * ]
  */
 type ReadOnlyMatrix<T> = Readonly<Readonly<T[]>[]>;
-// function Zip<T extends unknown[]>(...M: [...{ readonly [P in keyof T]: Readonly<T[P]>[] }]): [...T][] {
-function Zip(...M: ReadOnlyMatrix<unknown>): unknown[][] {
-    console.log(M);
-    return [];
+function Zip<T extends unknown[]>(...M: [...{ readonly [P in keyof T]: Readonly<T[P]>[] }]): T[] {
+// function Zip(...M: ReadOnlyMatrix<unknown>): unknown[][] {
+    const VMAX = M.reduce( (vmax, v) => vmax.length > v.length ? vmax : v, []);
+    return VMAX.map( (_, i) => M.map( v => v[i]) as T );
+/*
+    if(M.length===0){​​​​​
+        return [];
+    }​​​​​
+    const V = M.reduce((max, currentValue) => {​​​​​if (max.length < currentValue.length) {​​​​​max = currentValue;}​​​​​ return max;}​​​​​ )
+    const len = V.length;
+    const T = new Array(len);
+    for (let i = 0; i < len; i++){​​​​​
+        T[i] = M.map(array=>array[i]);
+    }​​​​​
+    return T;
+    */
 }
 
 LogTests("Zip de tableaux", Zip, "Zip", [
@@ -143,8 +156,11 @@ LogTests("Zip de tableaux", Zip, "Zip", [
  * Produit scalaire entre deux vecteurs
  */
 function ProduitScalaire(V1: Readonly<number[]>, V2: Readonly<number[]>): number {
-    console.log("ProduitScalaire", V1, V2);
-    return 0;
+    if (V1.length !== 0 && V2.length !== 0) {
+        if (V1.length === V2.length) {
+            return V1.reduce( (acc, x, i) => acc + x * V2[i] , 0);
+        } else throw "Les vecteurs doivent être de même taille";
+    } else throw "Les vecteurs doivent être non vides";
 }
 LogTests("Produit scalaire entre deux vecteurs", ProduitScalaire, "ProduitScalaire", [
     {args: [[1, 1], [1, 1]], expectedResult: 2},
@@ -161,9 +177,36 @@ LogTests("Produit scalaire entre deux vecteurs", ProduitScalaire, "ProduitScalai
  * Addition de matrices
  */
 function AjoutMatrices(M1: ReadOnlyMatrix<number>, M2: ReadOnlyMatrix<number>): number[][] {
-    console.log("AjoutMatrices", M1, M2);
-    return []
+    let M : number[][] = [];
+    if (M1.length !== 0 && M2.length !== 0 && M1.every(l1 => l1.length !== 0) && M2.every(l2 => l2.length !== 0)) {
+        if (M1.length === M2.length) {
+            return M1.map( (V, i) => V.map( (x, j) => x + M2[i][j] ) );
+        } else throw "Les matrices doivent être de même taille";
+    } else throw "Les matrices doivent être non vides";
 }
+
+/* Solution 1
+  M1.forEach((l1, i) => {
+                M.push([]);
+                l1.forEach((v1, j) => {
+                    M[i].push(v1 + M2[i][j]);
+                });
+            });
+            return M;
+ */
+
+/* SOlution 2
+ if(M1.length===0 || M2.length===0){
+        throw("Les matrices doivent être non vides")
+    }
+    if(M1.length!==M2.length){
+        throw("Les matrices doivent être de même taille")
+    }
+    if(M1[0].length===0 || M2[0].length===0){
+        throw("Les matrices doivent être non vides")
+    }
+return M1.map((V,i) => V.map((val,j) => val+M2[i][j]));
+*/
 LogTests("Addition de matrices", AjoutMatrices, "AjoutMatrices", [
     {args: [ [[1, 1], [1, 1]], [[1, 0], [0, 1]] ], expectedResult: [[2, 1], [1, 2]]},
     {args: [ [[1, 1], [1, 1]], [[1, 4], [0, 1]] ], expectedResult: [[2, 5], [1, 2]]},
