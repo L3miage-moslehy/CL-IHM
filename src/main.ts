@@ -125,7 +125,7 @@ LogTests("Les nombres strictement compris entre une valeur minimale et maximale"
  * ]
  */
 type ReadOnlyMatrix<T> = Readonly<Readonly<T[]>[]>;
-function Zip<T extends unknown[]>(...M: [...{ readonly [P in keyof T]: Readonly<T[P]>[] }]): T[] {
+function Zip<T extends unknown[]>(...M: [...{ [P in keyof T]: readonly T[P][] }]): T[] {
 // function Zip(...M: ReadOnlyMatrix<unknown>): unknown[][] {
     const VMAX = M.reduce( (vmax, v) => vmax.length > v.length ? vmax : v, []);
     return VMAX.map( (_, i) => M.map( v => v[i]) as T );
@@ -142,6 +142,7 @@ function Zip<T extends unknown[]>(...M: [...{ readonly [P in keyof T]: R
     return T;
     */
 }
+Zip([1, 2, 3], ['a', 'b', 'c'], [true, false, false])
 
 LogTests("Zip de tableaux", Zip, "Zip", [
     {args: [  ], expectedResult: []},
@@ -158,7 +159,8 @@ LogTests("Zip de tableaux", Zip, "Zip", [
 function ProduitScalaire(V1: Readonly<number[]>, V2: Readonly<number[]>): number {
     if (V1.length !== 0 && V2.length !== 0) {
         if (V1.length === V2.length) {
-            return V1.reduce( (acc, x, i) => acc + x * V2[i] , 0);
+            return Zip(V1, V2).reduce( (acc, [x, y]) => acc + x*y, 0 );
+            // OU return V1.reduce( (acc, x, i) => acc + x * V2[i] , 0);
         } else throw "Les vecteurs doivent être de même taille";
     } else throw "Les vecteurs doivent être non vides";
 }
